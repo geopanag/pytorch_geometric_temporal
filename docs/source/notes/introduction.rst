@@ -27,11 +27,11 @@ Data Structures
 Temporal Signal Iterators
 --------------------------
 
-PyTorch Geometric Tenporal offers data iterators for constant time difference spatio-temporal datasets which contain the temporal snapshots. There are two types of constant time difference data iterators:
+PyTorch Geometric Tenporal offers data iterators for spatio-temporal datasets which contain the temporal snapshots. There are three types of data iterators:
 
-- ``StaticGraphTemporalSignal`` - Is designed for constant time difference spatio-temporal signals defined on a **static** graph.
-- ``DynamicGraphTemporalSignal`` - Is designed for constant time difference spatio-temporal signals defined on a **dynamic** graph.
-
+- ``StaticGraphTemporalSignal`` - Is desiggned for **temporal signals** defined on a **static** graph.
+- ``DynamicGraphTemporalSignal`` - Is designed for **temporal signals** defined on a **dynamic** graph.
+- ``DynamicGraphStaticSignal`` - Is designed for **static signals** defined on a **dynamic** graph.
 
 Static Graph with Temporal Signal
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -51,6 +51,16 @@ The constructor of a ``DynamicGraphTemporalSignal`` object requires the followin
 - ``edge_indices`` - A **list** of ``NumPy`` arrays to hold the edge indices.
 - ``edge_weights`` - A **list** of ``NumPy`` arrays to hold the edge weights.
 - ``features`` - A **list** of ``NumPy`` arrays to hold the vertex features for each time period.
+- ``targets`` - A **list** of ``NumPy`` arrays to hold the vertex level targets for each time period.
+ 
+Dyanmic Graph with Static Signal
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The constructor of a ``DynamicGraphStaticSignal`` object requires the following parameters:
+
+- ``edge_indices`` - A **list** of ``NumPy`` arrays to hold the edge indices.
+- ``edge_weights`` - A **list** of ``NumPy`` arrays to hold the edge weights.
+- ``feature`` - A **single** ``NumPy`` array to hold the vertex features.
 - ``targets`` - A **list** of ``NumPy`` arrays to hold the vertex level targets for each time period.
 
 Temporal Snapshots
