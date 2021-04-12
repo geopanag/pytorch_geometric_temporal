@@ -16,36 +16,37 @@ class ChickenpoxDatasetLoader(object):
     def __init__(self):
         self._read_web_data()
 
+
     def _read_web_data(self):
         url = "https://raw.githubusercontent.com/benedekrozemberczki/pytorch_geometric_temporal/master/dataset/chickenpox.json"
         self._dataset = json.loads(urllib.request.urlopen(url).read())
 
+
     def _get_edges(self):
         self._edges = np.array(self._dataset["edges"]).T
+
 
     def _get_edge_weights(self):
         self._edge_weights = np.ones(self._edges.shape[1])
 
-    def _get_features(self):
-        self._features = []
-        for time in range(self._dataset["time_periods"]):
-            self._features.append(np.array(self._dataset[str(time)]["X"]))
 
-    def _get_targets(self):
-        self._targets = []
-        for time in range(self._dataset["time_periods"]):
-            self._targets.append(np.array(self._dataset[str(time)]["y"]))
+    def _get_targets_and_features(self):
+        stacked_target = np.array(self._dataset["FX"])
+        self.features = [stacked_target[i:i+self.lags,:].T for i in range(stacked_target.shape[0]-self.lags)]
+        self.targets = [stacked_target[i+self.lags,:].T for i in range(stacked_target.shape[0]-self.lags)]
 
-    def get_dataset(self) -> StaticGraphTemporalSignal:
-        """Returning the Hungarian Chickenpox cases data iterator.
 
+    def get_dataset(self, lags: int=4) -> StaticGraphTemporalSignal:
+        """Returning the Chickenpox Hungary data iterator.
+
+        Args types:
+            * **lags** *(int)* - The number of time lags. 
         Return types:
             * **dataset** *(StaticGraphTemporalSignal)* - The Chickenpox Hungary dataset.
         """
+        self.lags = lags
         self._get_edges()
         self._get_edge_weights()
-        self._get_features()
-        self._get_targets()
-        dataset = StaticGraphTemporalSignal(self._edges, self._edge_weights, self._features, self._targets)
+        self._get_targets_and_features()
+        dataset = StaticGraphTemporalSignal(self._edges, self._edge_weights, self.features, self.targets)
         return dataset
-

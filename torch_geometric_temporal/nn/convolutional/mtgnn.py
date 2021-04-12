@@ -91,10 +91,9 @@ class MixProp(nn.Module):
         H = X
         H_0 = X
         A = A / d.view(-1, 1)
-        for i in range(self._gdep):
+        for _ in range(self._gdep):
             H = self._alpha*X + (1 - self._alpha) * torch.einsum('ncwl,vw->ncvl', (H, A))
             H_0 = torch.cat((H_0,H), dim=1)
-        del i
         H_0 = self._mlp(H_0)
         return H_0
 
@@ -231,8 +230,6 @@ class LayerNormalization(nn.Module):
     """
     def __init__(self, normalized_shape: int, eps: float=1e-5, elementwise_affine: bool=True):
         super(LayerNormalization, self).__init__()
-        if isinstance(normalized_shape, numbers.Integral):
-            normalized_shape = (normalized_shape,)
         self._normalized_shape = tuple(normalized_shape)
         self._eps = eps
         self._elementwise_affine = elementwise_affine
@@ -266,10 +263,6 @@ class LayerNormalization(nn.Module):
             return F.layer_norm(X, tuple(X.shape[1:]), self._weight[:, idx, :], self._bias[:, idx, :], self._eps)
         else:
             return F.layer_norm(X, tuple(X.shape[1:]), self._weight, self._bias, self._eps)
-
-    def extra_repr(self):
-        return '{normalized_shape}, eps={eps}, ' \
-            'elementwise_affine={elementwise_affine}'.format(**self.__dict__)
 
 
 class MTGNNLayer(nn.Module):

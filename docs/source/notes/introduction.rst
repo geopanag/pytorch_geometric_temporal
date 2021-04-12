@@ -11,7 +11,7 @@ If you find *PyTorch Geometric Temporal* useful in your research, please conside
 .. code-block:: latex
 
     >@misc{pytorch_geometric_temporal,
-           author = {Benedek, Rozemberczki and Paul, Scherer and Yixuan, He and George, Panagopoulos and Maria, Astefanoaei and Oliver, Kiss and Nicolas, Collignon},
+           author = {Benedek, Rozemberczki and Paul, Scherer and Yixuan, He and George, Panagopoulos and Maria, Astefanoaei and Oliver, Kiss and Ferenc, Beres and Nicolas, Collignon},
            title = {{PyTorch Geometric Temporal}},
            year = {2020},
            publisher = {GitHub},
@@ -96,6 +96,7 @@ We also integrated existing datasets for performance evaluation:
 - `Pems Bay Dataset. <https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/dataset.html#torch_geometric_temporal.data.dataset.pems_bay.PemsBayDatasetLoader>`_
 - `Metr LA Dataset. <https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/dataset.html#torch_geometric_temporal.data.dataset.metr_la.METRLADatasetLoader>`_
 - `England COVID 19. <https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/dataset.html#torch_geometric_temporal.data.dataset.encovid.EnglandCovidDatasetLoader>`_
+- `Twitter Tennis. <https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/dataset.html#torch_geometric_temporal.data.dataset.twitter_tennis.TwitterTennisDatasetLoader>`_
 
 
 The Hungarian Chickenpox Dataset can be loaded by the following code snippet. The ``dataset`` returned by the public ``get_dataset`` method is a ``StaticGraphTemporalSignal`` object. 
@@ -218,9 +219,6 @@ We are using the Wikipedia Maths dataset in this case study. We will train a rec
     loader = WikiMathsDatasetLoader()
 
     dataset = loader.get_dataset(lags=14)
-
-
-    dataset = loader.get_dataset()
 
     train_dataset, test_dataset = temporal_signal_split(dataset, train_ratio=0.5)
 
