@@ -3,7 +3,7 @@ External Resources - Architectures
 
 * Yaguang Li, Rose Yu, Cyrus Shahabi, Yan Liu: **Diffusion Convolutional Recurrent Neural Network: Data-Driven Traffic Forecasting** `Paper <https://arxiv.org/abs/1707.01926>`_, `TensorFlow Code <https://github.com/liyaguang/DCRNN>`_, `PyTorch Code <https://github.com/chnsh/DCRNN_PyTorch>`_
 
-* Youngjoo Seo, Michaël Defferrard, Xavier Bresson, Pierre Vandergheynst: **Structured Sequence Modeling With Graph Convolutional Recurrent Networks** `Paper <https://arxiv.org/abs/1612.07659>`_, `Code <https://github.com/youngjoo-epfl/gconvRNN>`_ 
+* Youngjoo Seo, Michaël Defferrard, Xavier Bresson, Pierre Vandergheynst: **Structured Sequence Modeling With Graph Convolutional Recurrent Networks** `Paper <https://arxiv.org/abs/1612.07659>`_, `Code <https://github.com/youngjoo-epfl/gconvRNN>`_ , `TensorFlow Code <https://github.com/Zhangyang823/gconvRNN>`_ 
 
 * Jinyin Chen, Xuanheng Xu, Yangyang Wu, Haibin Zheng: **GC-LSTM: Graph Convolution Embedded LSTM for Dynamic Link Prediction** `Paper <https://arxiv.org/abs/1812.04206>`_
 
@@ -27,9 +27,15 @@ External Resources - Architectures
 
 * Zonghan Wu, Shirui Pan, Guodong Long, Jing Jiang, Xiaojun Chang, Chengqi Zhang: **Connecting the Dots: Multivariate Time Series Forecasting with Graph Neural Networks** `Paper <https://arxiv.org/abs/2005.11650>`_, `Code <https://github.com/nnzhan/MTGNN>`_
 
+* Lei Bai, Lina Yao, Can Li, Xianzhi Wang, Can Wang: **Adaptive Graph Convolutional Recurrent Network for Traffic Forecasting** `Paper <https://arxiv.org/abs/2007.02842>`_, `Code <https://github.com/LeiBAI/AGCRN>`_
+
 * George Panagopoulos, Giannis Nikolentzos, Michalis Vazirgiannis: **Transfer Graph Neural Networks for Pandemic Forecasting** `Paper <https://arxiv.org/abs/2009.08388>`_, `Code <https://github.com/geopanag/pandemic_tgnn>`_
 
 External Resources - Datasets
 =============================
 
 * Benedek Rozemberczki, Paul Scherer, Oliver Kiss, Rik Sarkar, Tamas Ferenci: **Chickenpox Cases in Hungary: a Benchmark Dataset for Spatiotemporal Signal Processing with Graph Neural Networks** `Paper <https://arxiv.org/abs/2102.08100>`_, `Dataset <https://github.com/benedekrozemberczki/spatiotemporal_datasets/>`_ 
+
+* Ferenc Béres, Róbert Pálovics, Anna Oláh, András A. Benczúr: **Temporal Walk Based Centrality Metric for Graph Streams** `Paper <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6214300/>`_, `Dataset <https://github.com/ferencberes/twittertennis>`_ 
+
+* Ferenc Béres, Domokos M. Kelen, Róbert Pálovics, András A. Benczúr : **Node Embeddings in Dynamic Graphs** `Paper <https://appliednetsci.springeropen.com/articles/10.1007/s41109-019-0169-5>`_, `Dataset <https://github.com/ferencberes/twittertennis>`_ 

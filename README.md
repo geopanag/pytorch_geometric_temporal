@@ -20,6 +20,7 @@
 [![Repo size][size-image]][size-url]
 [![Code Coverage][coverage-image]][coverage-url]
 [![Build Status][build-image]][build-url]
+[![Arxiv](https://img.shields.io/badge/ArXiv-2104.07788-orange.svg)](https://arxiv.org/abs/2104.07788)
 
 **[Documentation](https://pytorch-geometric-temporal.readthedocs.io)** | **[External Resources](https://pytorch-geometric-temporal.readthedocs.io/en/latest/notes/resources.html)** | **[Datasets](https://pytorch-geometric-temporal.readthedocs.io/en/latest/notes/introduction.html#discrete-time-datasets)**
 
@@ -35,13 +36,11 @@
 If you find *PyTorch Geometric Temporal* and the new datasets useful in your research, please consider adding the following citation:
 
 ```bibtex
-@misc{pytorch_geometric_temporal,
-      author = {Benedek, Rozemberczki and Paul, Scherer and Yixuan, He and George, Panagopoulos and Maria, Astefanoaei and Oliver, Kiss and Ferenc, Beres and Nicolas, Collignon},
-      title = {{PyTorch Geometric Temporal}},
-      year = {2020},
-      publisher = {GitHub},
-      journal = {GitHub repository},
-      howpublished = {\url{https://github.com/benedekrozemberczki/pytorch_geometric_temporal}},
+@misc{rozemberczki2021pytorch,
+      author = {Benedek Rozemberczki and Paul Scherer and Yixuan He and George Panagopoulos and Maria Astefanoaei and Oliver Kiss and Ferenc Beres and Nicolas Collignon and Rik Sarkar},
+      title = {{PyTorch Geometric Temporal: Spatiotemporal Signal Processing with Neural Machine Learning Models}},
+      year = {2021},
+      eprint = {arXiv:2104.07788},
 }
 ```
 
@@ -103,6 +102,8 @@ In detail, the following temporal graph neural networks were implemented.
 
 * **[A3T-GCN](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.recurrent.attentiontemporalgcn.A3TGCN)** from Zhu *et al.*: [A3T-GCN: Attention Temporal Graph Convolutional Network for Traffic Forecasting](https://arxiv.org/abs/2006.11583) (CoRR 2020)
 
+* **[AGCRN](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.recurrent.agcrn.AGCRN)** from Bai *et al.*: [Adaptive Graph Convolutional Recurrent Network for Traffic Forecasting](https://arxiv.org/abs/2007.02842) (NeurIPS 2020)
+
 * **[MPNN LSTM](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.recurrent.mpnn_lstm.MPNNLSTM)** from Panagopoulos *et al.*: [Transfer Graph Neural Networks for Pandemic Forecasting](https://arxiv.org/abs/2009.08388) (AAAI 2021)
 
 **Temporal Graph Convolutions**
@@ -124,6 +125,8 @@ In detail, the following temporal graph neural networks were implemented.
 * **[DConv](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.recurrent.dcrnn.DConv)** from Li *et al.*: [Diffusion Convolutional Recurrent Neural Network: Data-Driven Traffic Forecasting](https://arxiv.org/abs/1707.01926) (ICLR 2018)
 
 * **[ChebConvAttention](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.convolutional.astgcn.ChebConvAttention)** from Guo *et al.*: [Attention Based Spatial-Temporal Graph Convolutional Networks for Traffic Flow Forecasting](https://ojs.aaai.org/index.php/AAAI/article/view/3881) (AAAI 2019)
+
+* **[AVWGCN](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.recurrent.agcrn.AVWGCN)** from Bai *et al.*: [Adaptive Graph Convolutional Recurrent Network for Traffic Forecasting](https://arxiv.org/abs/2007.02842) (NeurIPS 2020)
 
 --------------------------------------------------------------------------------
 

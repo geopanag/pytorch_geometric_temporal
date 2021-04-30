@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 import networkx as nx
-from torch_geometric_temporal.nn.recurrent import GConvLSTM, GConvGRU, DCRNN
+from torch_geometric_temporal.nn.recurrent import GConvLSTM, GConvGRU, DCRNN, AGCRN
 from torch_geometric_temporal.nn.recurrent import GCLSTM, LRGCN, DyGrEncoder
 from torch_geometric_temporal.nn.recurrent import EvolveGCNH, EvolveGCNO, TGCN, A3TGCN, MPNNLSTM
 
@@ -13,7 +13,7 @@ def create_mock_data(number_of_nodes, edge_per_node, in_channels):
     edge_index = torch.LongTensor(np.array([edge for edge in graph.edges()]).T)
     X = torch.FloatTensor(np.random.uniform(-1, 1, (number_of_nodes, in_channels)))
     return X, edge_index
-    
+
 def create_mock_attention_data(number_of_nodes, edge_per_node, in_channels, periods):
     """
     Creating a mock stacked feature matrix and edge index.
@@ -26,19 +26,17 @@ def create_mock_attention_data(number_of_nodes, edge_per_node, in_channels, peri
 
 def create_mock_states(number_of_nodes, out_channels):
     """
-    Creating mock hidden and cell states. 
+    Creating mock hidden and cell states.
     """
     H = torch.FloatTensor(np.random.uniform(-1, 1, (number_of_nodes, in_channels)))
     C = torch.FloatTensor(np.random.uniform(-1, 1, (number_of_nodes, in_channels)))
     return H, C
-
 
 def create_mock_edge_weight(edge_index):
     """
     Creating a mock edge weight tensor.
     """
     return torch.FloatTensor(np.random.uniform(0, 1, (edge_index.shape[1])))
-
 
 def create_mock_edge_relations(edge_index, num_relations):
     """
@@ -70,7 +68,6 @@ def test_gconv_lstm_layer():
 
     assert H.shape == (number_of_nodes, out_channels)
     assert C.shape == (number_of_nodes, out_channels)
-    
 
     H, C = layer(X, edge_index, edge_weight)
 
@@ -113,7 +110,7 @@ def test_gconv_gru_layer():
     H = layer(X, edge_index, edge_weight, H)
 
     assert H.shape == (number_of_nodes, out_channels)
-    
+
 def test_mpnn_lstm_layer():
     """
     Testing the MPNN LSTM Layer.
@@ -137,11 +134,11 @@ def test_mpnn_lstm_layer():
                      num_nodes=number_of_nodes,
                      window = window,
                      dropout = 0.5).to(device)
-                     
+
     H = layer(X, edge_index, edge_weight)
-    
+
     assert H.shape == (number_of_nodes, 2*hidden_size + in_channels + window-1)
-    
+
 def test_tgcn_layer():
     """
     Testing the T-GCN Layer.
@@ -171,7 +168,7 @@ def test_tgcn_layer():
     H = layer(X, edge_index, edge_weight, H)
 
     assert H.shape == (number_of_nodes, out_channels)
-    
+
 def test_a3tgcn_layer():
     """
     Testing the A3TGCN Layer.
@@ -181,7 +178,7 @@ def test_a3tgcn_layer():
     in_channels = 64
     out_channels = 16
     periods = 7
-    
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     X, edge_index = create_mock_attention_data(number_of_nodes, edge_per_node, in_channels, periods)
     X = X.to(device)
@@ -201,7 +198,6 @@ def test_a3tgcn_layer():
     H = layer(X, edge_index, edge_weight, H)
 
     assert H.shape == (number_of_nodes, out_channels)
-
 
 def test_dcrnn_layer():
     """
@@ -246,6 +242,49 @@ def test_dcrnn_layer():
 
     assert H.shape == (number_of_nodes, out_channels)
 
+def test_agcrn_layer():
+    """
+    Testing the AGCRN Layer.
+    """
+    number_of_nodes = 100
+    edge_per_node = 10
+    in_channels = 64
+    out_channels = 16
+    embedding_dimensions = 32
+    K = 2
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    X, edge_index = create_mock_data(number_of_nodes, edge_per_node, in_channels)
+    X = X.view(-1, number_of_nodes, in_channels)
+    X = X.to(device)
+    E = torch.nn.Parameter(torch.randn(number_of_nodes, embedding_dimensions),
+                           requires_grad=True).to(device)
+
+    layer = AGCRN(number_of_nodes=number_of_nodes,
+                  in_channels=in_channels,
+                  out_channels=out_channels,
+                  K=K, embedding_dimensions=embedding_dimensions).to(device)
+
+    H = layer(X, E)
+
+    assert H.shape == (1, number_of_nodes, out_channels)
+
+    H = layer(X, E, H)
+
+    assert H.shape == (1, number_of_nodes, out_channels)
+
+    layer = AGCRN(number_of_nodes=number_of_nodes,
+                  in_channels=in_channels,
+                  out_channels=out_channels,
+                  K=3, embedding_dimensions=embedding_dimensions).to(device)
+
+    H = layer(X, E)
+
+    assert H.shape == (1, number_of_nodes, out_channels)
+
+    H = layer(X, E, H)
+
+    assert H.shape == (1, number_of_nodes, out_channels)
+
 
 def test_gc_lstm_layer():
     """
@@ -269,7 +308,6 @@ def test_gc_lstm_layer():
 
     assert H.shape == (number_of_nodes, out_channels)
     assert C.shape == (number_of_nodes, out_channels)
-    
 
     H, C = layer(X, edge_index, edge_weight)
 
@@ -379,11 +417,11 @@ def test_evolve_gcn_h_layer():
 
 
     X = layer(X, edge_index)
-    
+
     assert X.shape == (number_of_nodes, in_channels)
 
     X = layer(X, edge_index, edge_weight)
-    
+
     assert X.shape == (number_of_nodes, in_channels)
 
 def test_evolve_gcn_o_layer():
@@ -403,9 +441,9 @@ def test_evolve_gcn_o_layer():
     layer = EvolveGCNO(in_channels = in_channels).to(device)
 
     X = layer(X, edge_index)
-    
+
     assert X.shape == (number_of_nodes, in_channels)
 
     X = layer(X, edge_index, edge_weight)
-    
+
     assert X.shape == (number_of_nodes, in_channels)
