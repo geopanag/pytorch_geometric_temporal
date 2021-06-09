@@ -3,7 +3,7 @@ External Resources - Architectures
 
 * Yaguang Li, Rose Yu, Cyrus Shahabi, Yan Liu: **Diffusion Convolutional Recurrent Neural Network: Data-Driven Traffic Forecasting** `Paper <https://arxiv.org/abs/1707.01926>`_, `TensorFlow Code <https://github.com/liyaguang/DCRNN>`_, `PyTorch Code <https://github.com/chnsh/DCRNN_PyTorch>`_
 
-* Youngjoo Seo, Michaël Defferrard, Xavier Bresson, Pierre Vandergheynst: **Structured Sequence Modeling With Graph Convolutional Recurrent Networks** `Paper <https://arxiv.org/abs/1612.07659>`_, `Code <https://github.com/youngjoo-epfl/gconvRNN>`_ , `TensorFlow Code <https://github.com/Zhangyang823/gconvRNN>`_ 
+* Youngjoo Seo, Michaël Defferrard, Xavier Bresson, Pierre Vandergheynst: **Structured Sequence Modeling With Graph Convolutional Recurrent Networks** `Paper <https://arxiv.org/abs/1612.07659>`_, `Code <https://github.com/youngjoo-epfl/gconvRNN>`_, `TensorFlow Code <https://github.com/Zhangyang823/gconvRNN>`_ 
 
 * Jinyin Chen, Xuanheng Xu, Yangyang Wu, Haibin Zheng: **GC-LSTM: Graph Convolution Embedded LSTM for Dynamic Link Prediction** `Paper <https://arxiv.org/abs/1812.04206>`_
 
@@ -30,6 +30,8 @@ External Resources - Architectures
 * Lei Bai, Lina Yao, Can Li, Xianzhi Wang, Can Wang: **Adaptive Graph Convolutional Recurrent Network for Traffic Forecasting** `Paper <https://arxiv.org/abs/2007.02842>`_, `Code <https://github.com/LeiBAI/AGCRN>`_
 
 * George Panagopoulos, Giannis Nikolentzos, Michalis Vazirgiannis: **Transfer Graph Neural Networks for Pandemic Forecasting** `Paper <https://arxiv.org/abs/2009.08388>`_, `Code <https://github.com/geopanag/pandemic_tgnn>`_
+
+* Lei Shi, Yifan Zhang, Jian Cheng, Hanqing Lu: **Two-Stream Adaptive Graph Convolutional Networks for Skeleton-Based Action Recognition** `Paper <https://arxiv.org/abs/1805.07694>`_, `Code <https://github.com/lshiwjx/2s-AGCN>`_
 
 External Resources - Datasets
 =============================

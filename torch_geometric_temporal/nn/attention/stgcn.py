@@ -36,7 +36,7 @@ class TemporalConv(nn.Module):
         X = X.permute(0, 3, 2, 1)
         P = self.conv_1(X)
         Q = torch.sigmoid(self.conv_2(X))
-        PQ = P + Q
+        PQ = P * Q
         H = F.relu(PQ + self.conv_3(X))
         H = H.permute(0, 3, 2, 1)
         return H
@@ -124,11 +124,11 @@ class STConv(nn.Module):
         Return types:
             * **T** (PyTorch FloatTensor) - Sequence of node features.
         """
-        T = self._temporal_conv1(X)
-
-        for b in range(T.size(0)):
-            for t in range(T.size(1)):
-                T[b][t] = self._graph_conv(T[b][t], edge_index, edge_weight)
+        T_0 = self._temporal_conv1(X)
+        T = torch.zeros_like(T_0).to(T_0.device)
+        for b in range(T_0.size(0)):
+            for t in range(T_0.size(1)):
+                T[b][t] = self._graph_conv(T_0[b][t], edge_index, edge_weight)
 
         T = F.relu(T)
         T = self._temporal_conv2(T)
