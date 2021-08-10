@@ -7,9 +7,11 @@ from torch_geometric_temporal.signal import StaticGraphTemporalSignal
 from torch_geometric_temporal.signal import DynamicGraphTemporalSignal
 from torch_geometric_temporal.signal import DynamicGraphStaticSignal
 
-from torch_geometric_temporal.dataset import METRLADatasetLoader, PemsBayDatasetLoader, WindmillOutputDatasetLoader
+from torch_geometric_temporal.dataset import METRLADatasetLoader, PemsBayDatasetLoader
 from torch_geometric_temporal.dataset import ChickenpoxDatasetLoader, PedalMeDatasetLoader, WikiMathsDatasetLoader, EnglandCovidDatasetLoader
-from torch_geometric_temporal.dataset import TwitterTennisDatasetLoader, MontevideoBusDatasetLoader
+from torch_geometric_temporal.dataset import TwitterTennisDatasetLoader, MontevideoBusDatasetLoader, MTMDatasetLoader
+
+from torch_geometric_temporal.dataset import WindmillOutputLargeDatasetLoader, WindmillOutputMediumDatasetLoader, WindmillOutputSmallDatasetLoader
 
 def get_edge_array(n_count):
     return np.array([edge for edge in nx.gnp_random_graph(n_count, 0.1).edges()]).T
@@ -117,8 +119,8 @@ def test_wiki():
             snapshot.x.shape == (1068, 8)
             snapshot.y.shape == (1068, )
             
-def test_windmill():
-    loader = WindmillOutputDatasetLoader()
+def test_windmilllarge():
+    loader = WindmillOutputLargeDatasetLoader()
     dataset = loader.get_dataset()
     for epoch in range(2):
         for snapshot in dataset:
@@ -126,6 +128,27 @@ def test_windmill():
             snapshot.edge_attr.shape == (97032, )
             snapshot.x.shape == (312, 8)
             snapshot.y.shape == (312, )
+            
+def test_windmillsmall():
+    loader = WindmillOutputSmallDatasetLoader()
+    dataset = loader.get_dataset()
+    for epoch in range(2):
+        for snapshot in dataset:
+            snapshot.edge_index.shape == (2, 121)
+            snapshot.edge_attr.shape == (121, )
+            snapshot.x.shape == (11, 8)
+            snapshot.y.shape == (11, )
+
+            
+def test_windmillmedium():
+    loader = WindmillOutputMediumDatasetLoader()
+    dataset = loader.get_dataset()
+    for epoch in range(2):
+        for snapshot in dataset:
+            snapshot.edge_index.shape == (2, 676)
+            snapshot.edge_attr.shape == (676, )
+            snapshot.x.shape == (26, 8)
+            snapshot.y.shape == (26, )
             
 def test_covid():
     loader = EnglandCovidDatasetLoader()
@@ -237,6 +260,16 @@ def test_twitter_tennis_uo17():
 
     check_tennis_data("uo17", 1000, None, edges_in_snapshots)
     check_tennis_data("uo17", 200, "encoded", edges_in_snapshots)
+
+def test_mtm():
+    loader = MTMDatasetLoader()
+    dataset = loader.get_dataset()
+    for epoch in range(3):
+        for snapshot in dataset:
+            assert snapshot.edge_index.shape == (2, 19)
+            assert snapshot.edge_attr.shape == (19, )
+            assert snapshot.x.shape == (3, 21, 16)
+            assert snapshot.y.shape == (16, 6)
 
 def test_discrete_train_test_split_static():
     loader = ChickenpoxDatasetLoader()

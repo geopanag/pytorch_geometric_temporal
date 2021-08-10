@@ -19,10 +19,18 @@ Datasets
     :members:
     :undoc-members:
     
-.. automodule:: torch_geometric_temporal.dataset.windmill
+.. automodule:: torch_geometric_temporal.dataset.windmilllarge
     :members:
     :undoc-members:
     
+.. automodule:: torch_geometric_temporal.dataset.windmillmedium
+    :members:
+    :undoc-members:
+        
+.. automodule:: torch_geometric_temporal.dataset.windmillsmall
+    :members:
+    :undoc-members:
+        
 .. automodule:: torch_geometric_temporal.dataset.metr_la
     :members:
     :undoc-members:
@@ -43,3 +51,7 @@ Datasets
     :members:
     :undoc-members:
     :exclude-members: transform_degree, transform_transitivity, encode_features, onehot_encoding
+
+.. automodule:: torch_geometric_temporal.dataset.mtm
+    :members:
+    :undoc-members:

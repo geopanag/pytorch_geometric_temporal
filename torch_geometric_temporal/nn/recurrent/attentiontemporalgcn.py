@@ -3,17 +3,17 @@ from .temporalgcn import TGCN
 from torch_geometric.nn import GCNConv
 
 class A3TGCN(torch.nn.Module):
-    r"""An implementation of the Temporal Graph Convolutional Gated Recurrent Cell.
-    For details see this paper: `"T-GCN: A Temporal Graph ConvolutionalNetwork for
-    Traffic Prediction." <https://arxiv.org/abs/1811.05320>`_
+    r"""An implementation of the Attention Temporal Graph Convolutional Cell.
+    For details see this paper: `"A3T-GCN: Attention Temporal Graph Convolutional 
+    Network for Traffic Forecasting." <https://arxiv.org/abs/1811.05320>`_
 
     Args:
-        * **in_channels** (int): Number of input features.
-        * **out_channels** (int): Number of output features.
-        * **periods** (int): Number of time periods.
-        * **improved** (bool): Stronger self loops (default :obj:`False`).
-        * **cached** (bool): Caching the message weights (default :obj:`False`).
-        * **add_self_loops** (bool): Adding self-loops for smoothing (default :obj:`True`).
+        in_channels (int): Number of input features.
+        out_channels (int): Number of output features.
+        periods (int): Number of time periods.
+        improved (bool): Stronger self loops (default :obj:`False`).
+        cached (bool): Caching the message weights (default :obj:`False`).
+        add_self_loops (bool): Adding self-loops for smoothing (default :obj:`True`).
     """
     def __init__(self, in_channels: int, out_channels: int, periods: int,
                  improved: bool=False, cached: bool=False, add_self_loops: bool=True):
