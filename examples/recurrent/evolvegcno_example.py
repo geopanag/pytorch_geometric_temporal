@@ -16,8 +16,8 @@ train_dataset, test_dataset = temporal_signal_split(dataset, train_ratio=0.2)
 class RecurrentGCN(torch.nn.Module):
     def __init__(self, node_features):
         super(RecurrentGCN, self).__init__()
-        self.recurrent = EvolveGCNO(node_features, 4)
-        self.linear = torch.nn.Linear(4, 1)
+        self.recurrent = EvolveGCNO(node_features)
+        self.linear = torch.nn.Linear(node_features, 1)
 
     def forward(self, x, edge_index, edge_weight):
         h = self.recurrent(x, edge_index, edge_weight)
@@ -26,6 +26,8 @@ class RecurrentGCN(torch.nn.Module):
         return h
         
 model = RecurrentGCN(node_features = 4)
+for param in model.parameters():
+    param.retain_grad()
 
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
@@ -37,13 +39,15 @@ for epoch in tqdm(range(200)):
         y_hat = model(snapshot.x, snapshot.edge_index, snapshot.edge_attr)
         cost = cost + torch.mean((y_hat-snapshot.y)**2)
     cost = cost / (time+1)
-    cost.backward()
+    cost.backward(retain_graph=True)
     optimizer.step()
     optimizer.zero_grad()
     
 model.eval()
 cost = 0
 for time, snapshot in enumerate(test_dataset):
+    if time == 0:
+        model.recurrent.weight = None
     y_hat = model(snapshot.x, snapshot.edge_index, snapshot.edge_attr)
     cost = cost + torch.mean((y_hat-snapshot.y)**2)
 cost = cost / (time+1)
