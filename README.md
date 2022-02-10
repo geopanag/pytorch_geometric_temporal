@@ -15,7 +15,7 @@
   <img width="90%" src="https://raw.githubusercontent.com/benedekrozemberczki/pytorch_geometric_temporal/master/docs/source/_static/img/text_logo.jpg?sanitize=true" />
 </p>
 
---------------------------------------------------------------------------------
+-----------------------------------------------------
 
 [![PyPI Version][pypi-image]][pypi-url]
 [![Docs Status][docs-image]][docs-url]
@@ -32,7 +32,7 @@
 
 The package interfaces well with [Pytorch Lightning](https://pytorch-lightning.readthedocs.io) which allows training on CPUs, single and multiple GPUs out-of-the-box. Take a look at this [introductory example](https://github.com/benedekrozemberczki/pytorch_geometric_temporal/blob/master/examples/recurrent/lightning_example.py) of using PyTorch Geometric Temporal with Pytorch Lighning.
 
-We also provide detailed examples for each of the [recurrent](https://github.com/benedekrozemberczki/pytorch_geometric_temporal/tree/master/examples/recurrent) models.
+We also provide detailed examples for each of the [recurrent](https://github.com/benedekrozemberczki/pytorch_geometric_temporal/tree/master/examples/recurrent) models and [notebooks](https://github.com/benedekrozemberczki/pytorch_geometric_temporal/tree/master/notebooks) for the attention based ones.
 
 
 --------------------------------------------------------------------------------
@@ -58,6 +58,7 @@ If you find *PyTorch Geometric Temporal* and the new datasets useful in your res
                title = {{PyTorch Geometric Temporal: Spatiotemporal Signal Processing with Neural Machine Learning Models}},
                year = {2021},
                booktitle={Proceedings of the 30th ACM International Conference on Information and Knowledge Management},
+               pages = {4564–4573},
 }
 ```
 
@@ -105,10 +106,6 @@ In detail, the following temporal graph neural networks were implemented.
 
 * **[GConvLSTM](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.recurrent.gconv_lstm.GConvLSTM)** from Seo *et al.*: [Structured Sequence Modeling with Graph  Convolutional Recurrent Networks](https://arxiv.org/abs/1612.07659) (ICONIP 2018)
 
-<details>
-<summary><b>Expand to see all implemented recurrent graph convolutional layers...</b></summary>
-
-
 * **[GC-LSTM](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.recurrent.gc_lstm.GCLSTM)** from Chen *et al.*: [GC-LSTM: Graph Convolution Embedded LSTM for Dynamic Link Prediction](https://arxiv.org/abs/1812.04206) (CoRR 2018)
 
 * **[LRGCN](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.recurrent.lrgcn.LRGCN)** from Li *et al.*: [Predicting Path Failure In Time-Evolving Graphs](https://arxiv.org/abs/1905.03994) (KDD 2019)
@@ -126,8 +123,6 @@ In detail, the following temporal graph neural networks were implemented.
 * **[AGCRN](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.recurrent.agcrn.AGCRN)** from Bai *et al.*: [Adaptive Graph Convolutional Recurrent Network for Traffic Forecasting](https://arxiv.org/abs/2007.02842) (NeurIPS 2020)
 
 * **[MPNN LSTM](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.recurrent.mpnn_lstm.MPNNLSTM)** from Panagopoulos *et al.*: [Transfer Graph Neural Networks for Pandemic Forecasting](https://arxiv.org/abs/2009.08388) (AAAI 2021)
-
-</details>
   
 **Attention Aggregated Temporal Graph Convolutions**
 
@@ -136,11 +131,6 @@ In detail, the following temporal graph neural networks were implemented.
 * **[ASTGCN](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.attention.astgcn.ASTGCN)** from Guo *et al.*: [Attention Based Spatial-Temporal Graph Convolutional Networks for Traffic Flow Forecasting](https://ojs.aaai.org/index.php/AAAI/article/view/3881) (AAAI 2019)
 
 * **[MSTGCN](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.attention.mstgcn.MSTGCN)** from Guo *et al.*: [Attention Based Spatial-Temporal Graph Convolutional Networks for Traffic Flow Forecasting](https://ojs.aaai.org/index.php/AAAI/article/view/3881) (AAAI 2019)
-  
-
-<details>
-<summary><b>Expand to see all implemented attention aggregated graph convolutional layers...</b></summary>
-
 
 * **[GMAN](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.attention.gman.GMAN)** from Zheng *et al.*: [GMAN: A Graph Multi-Attention Network for Traffic Prediction](https://arxiv.org/pdf/1911.08415.pdf) (AAAI 2020)
 
@@ -150,8 +140,6 @@ In detail, the following temporal graph neural networks were implemented.
 
 * **[DNNTSP](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.attention.dnntsp.DNNTSP)** from Yu *et al.*: [Predicting Temporal Sets with Deep Neural Networks](https://dl.acm.org/doi/abs/10.1145/3394486.3403152) (KDD 2020)
 
-</details>
-  
 **Auxiliary Graph Convolutions**
 
 * **[TemporalConv](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.attention.stgcn.TemporalConv)** from Yu *et al.*: [Spatio-Temporal Graph Convolutional Networks: A Deep Learning Framework for Traffic Forecasting](https://arxiv.org/abs/1709.04875) (IJCAI 2018)
@@ -160,14 +148,7 @@ In detail, the following temporal graph neural networks were implemented.
 
 * **[ChebConvAttention](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.attention.astgcn.ChebConvAttention)** from Guo *et al.*: [Attention Based Spatial-Temporal Graph Convolutional Networks for Traffic Flow Forecasting](https://ojs.aaai.org/index.php/AAAI/article/view/3881) (AAAI 2019)
 
-
-<details>
-<summary><b>Expand to see all auxiliary graph convolution layers...</b></summary>
-  
 * **[AVWGCN](https://pytorch-geometric-temporal.readthedocs.io/en/latest/modules/root.html#torch_geometric_temporal.nn.recurrent.agcrn.AVWGCN)** from Bai *et al.*: [Adaptive Graph Convolutional Recurrent Network for Traffic Forecasting](https://arxiv.org/abs/2007.02842) (NeurIPS 2020)
-
-  
-</details>
   
 --------------------------------------------------------------------------------
 
@@ -184,91 +165,24 @@ If you notice anything unexpected, please open an [issue](https://benedekrozembe
 
 Binaries are provided for Python version <= 3.9.
 
-**PyTorch 1.9.0**
+**PyTorch 1.10.0**
 
-To install the binaries for PyTorch 1.9.0, simply run
+To install the binaries for PyTorch 1.10.0, simply run
 
 ```sh
-pip install torch-scatter -f https://pytorch-geometric.com/whl/torch-1.9.0+${CUDA}.html
-pip install torch-sparse -f https://pytorch-geometric.com/whl/torch-1.9.0+${CUDA}.html
-pip install torch-cluster -f https://pytorch-geometric.com/whl/torch-1.9.0+${CUDA}.html
-pip install torch-spline-conv -f https://pytorch-geometric.com/whl/torch-1.9.0+${CUDA}.html
+pip install torch-scatter -f https://data.pyg.org/whl/torch-1.10.0+${CUDA}.html
+pip install torch-sparse -f https://data.pyg.org/whl/torch-1.10.0+${CUDA}.html
 pip install torch-geometric
 pip install torch-geometric-temporal
 ```
 
-where `${CUDA}` should be replaced by either `cpu`, `cu102`, or `cu111` depending on your PyTorch installation.
+where `${CUDA}` should be replaced by either `cpu`, `cu102`, or `cu113` depending on your PyTorch installation.
 
-|             | `cpu` | `cu102` | `cu111` |
+|             | `cpu` | `cu102` | `cu113` |
 |-------------|-------|---------|---------|
 | **Linux**   | ✅    | ✅      | ✅      |
 | **Windows** | ✅    | ✅      | ✅      |
 | **macOS**   | ✅    |         |         |
-
-**PyTorch 1.8.0**
-
-To install the binaries for PyTorch 1.8.0, simply run
-
-```sh
-$ pip install torch-scatter -f https://pytorch-geometric.com/whl/torch-1.8.0+${CUDA}.html
-$ pip install torch-sparse -f https://pytorch-geometric.com/whl/torch-1.8.0+${CUDA}.html
-$ pip install torch-cluster -f https://pytorch-geometric.com/whl/torch-1.8.0+${CUDA}.html
-$ pip install torch-spline-conv -f https://pytorch-geometric.com/whl/torch-1.8.0+${CUDA}.html
-$ pip install torch-geometric
-$ pip install torch-geometric-temporal
-```
-
-where `${CUDA}` should be replaced by either `cpu`, `cu101`, `cu102`, or `cu111` depending on your PyTorch installation.
-
-|             | `cpu` | `cu101` | `cu102` | `cu111` |
-|-------------|-------|---------|---------|---------|
-| **Linux**   | ✅    | ✅      | ✅      | ✅      |
-| **Windows** | ✅    | ✅      | ✅      | ✅      |
-| **macOS**   | ✅    |         |         |         |
-
-**PyTorch 1.7.0**
-
-To install the binaries for PyTorch 1.7.0, simply run
-
-```sh
-$ pip install torch-scatter==latest+${CUDA} -f https://pytorch-geometric.com/whl/torch-1.7.0.html
-$ pip install torch-sparse==latest+${CUDA} -f https://pytorch-geometric.com/whl/torch-1.7.0.html
-$ pip install torch-cluster==latest+${CUDA} -f https://pytorch-geometric.com/whl/torch-1.7.0.html
-$ pip install torch-spline-conv==latest+${CUDA} -f https://pytorch-geometric.com/whl/torch-1.7.0.html
-$ pip install torch-geometric
-$ pip install torch-geometric-temporal
-```
-
-where `${CUDA}` should be replaced by either `cpu`, `cu92`, `cu101`, `cu102` or `cu110` depending on your PyTorch installation.
-
-|             | `cpu` | `cu92` | `cu101` | `cu102` | `cu110` |
-|-------------|-------|--------|---------|---------|---------|
-| **Linux**   | ✅    | ✅     | ✅     | ✅      | ✅     |
-| **Windows** | ✅    | ❌     | ✅     | ✅      | ✅     |
-| **macOS**   | ✅    |        |         |         |         |
-
---------------------------------------------------------------------------------
-
-**PyTorch 1.6.0**
-
-To install the binaries for PyTorch 1.6.0, simply run
-
-```sh
-$ pip install torch-scatter==latest+${CUDA} -f https://pytorch-geometric.com/whl/torch-1.6.0.html
-$ pip install torch-sparse==latest+${CUDA} -f https://pytorch-geometric.com/whl/torch-1.6.0.html
-$ pip install torch-cluster==latest+${CUDA} -f https://pytorch-geometric.com/whl/torch-1.6.0.html
-$ pip install torch-spline-conv==latest+${CUDA} -f https://pytorch-geometric.com/whl/torch-1.6.0.html
-$ pip install torch-geometric
-$ pip install torch-geometric-temporal
-```
-
-where `${CUDA}` should be replaced by either `cpu`, `cu92`, `cu101` or `cu102` depending on your PyTorch installation.
-
-|             | `cpu` | `cu92` | `cu101` | `cu102` |
-|-------------|-------|--------|---------|---------|
-| **Linux**   | ✅    | ✅    | ✅     | ✅      |
-| **Windows** | ✅    | ❌    | ✅     | ✅      |
-| **macOS**   | ✅    |        |         |         |
 
 --------------------------------------------------------------------------------
 
