@@ -1,14 +1,14 @@
 import torch
 import numpy as np
-from typing import List, Dict, Union, Tuple
+from typing import Sequence, Dict, Union, Tuple
 from torch_geometric.data import Batch, HeteroData
 
 Edge_Index = Union[Dict[Tuple[str, str, str], np.ndarray], None]
 Edge_Weight = Union[Dict[Tuple[str, str, str], np.ndarray], None]
-Node_Features = List[Union[Dict[str, np.ndarray], None]]
-Targets = List[Union[Dict[str, np.ndarray], None]]
+Node_Features = Sequence[Union[Dict[str, np.ndarray], None]]
+Targets = Sequence[Union[Dict[str, np.ndarray], None]]
 Batches = Union[Dict[str, np.ndarray], None]
-Additional_Features = List[Union[Dict[str, np.ndarray], None]]
+Additional_Features = Sequence[Union[Dict[str, np.ndarray], None]]
 
 
 class StaticHeteroGraphTemporalSignalBatch(object):
@@ -25,13 +25,13 @@ class StaticHeteroGraphTemporalSignalBatch(object):
              and their edge index tensors.
             edge_weight_dict (Dictionary of keys=Tuples and values=Numpy arrays): Relation type tuples
              and their edge weight tensors.
-            feature_dicts (List of dictionaries where keys=Strings and values=Numpy arrays): List of node
+            feature_dicts (Sequence of dictionaries where keys=Strings and values=Numpy arrays): Sequence of node
              types and their feature tensors.
-            target_dicts (List of dictionaries where keys=Strings and values=Numpy arrays): List of node
+            target_dicts (Sequence of dictionaries where keys=Strings and values=Numpy arrays): Sequence of node
              types and their label (target) tensors.
             batch_dict (Dictionary of keys=Strings and values=Numpy arrays): Batch index tensor of each
              node type.
-            **kwargs (optional List of dictionaries where keys=Strings and values=Numpy arrays): List
+            **kwargs (optional Sequence of dictionaries where keys=Strings and values=Numpy arrays): Sequence
              of node types and their additional attributes.
         """
 
@@ -117,35 +117,45 @@ class StaticHeteroGraphTemporalSignalBatch(object):
         }
         return additional_features
     
-    def __getitem__(self, time_index: int):
-        x_dict = self._get_features(time_index)
-        edge_index_dict = self._get_edge_index()
-        edge_weight_dict = self._get_edge_weight()
-        batch_dict = self._get_batch_index()
-        y_dict = self._get_target(time_index)
-        additional_features = self._get_additional_features(time_index)
+    def __getitem__(self, time_index: Union[int, slice]):
+        if isinstance(time_index, slice):
+            snapshot = StaticHeteroGraphTemporalSignalBatch(
+                self.edge_index_dict,
+                self.edge_weight_dict,
+                self.feature_dicts[time_index],
+                self.target_dicts[time_index],
+                self.batch_dict,
+                **{key: getattr(self, key)[time_index] for key in self.additional_feature_keys}
+            )
+        else:
+            x_dict = self._get_features(time_index)
+            edge_index_dict = self._get_edge_index()
+            edge_weight_dict = self._get_edge_weight()
+            batch_dict = self._get_batch_index()
+            y_dict = self._get_target(time_index)
+            additional_features = self._get_additional_features(time_index)
 
-        snapshot = Batch.from_data_list([HeteroData()])
-        if x_dict:
-            for key, value in x_dict.items():
-                snapshot[key].x = value
-        if edge_index_dict:
-            for key, value in edge_index_dict.items():
-                snapshot[key].edge_index = value
-        if edge_weight_dict:
-            for key, value in edge_weight_dict.items():
-                snapshot[key].edge_attr = value
-        if y_dict:
-            for key, value in y_dict.items():
-                snapshot[key].y = value
-        if batch_dict:
-            for key, value in batch_dict.items():
-                snapshot[key].batch = value
-        if additional_features:
-            for feature_name, feature_dict in additional_features.items():
-                if feature_dict:
-                    for key, value in feature_dict.items():
-                        snapshot[key][feature_name] = value
+            snapshot = Batch.from_data_list([HeteroData()])
+            if x_dict:
+                for key, value in x_dict.items():
+                    snapshot[key].x = value
+            if edge_index_dict:
+                for key, value in edge_index_dict.items():
+                    snapshot[key].edge_index = value
+            if edge_weight_dict:
+                for key, value in edge_weight_dict.items():
+                    snapshot[key].edge_attr = value
+            if y_dict:
+                for key, value in y_dict.items():
+                    snapshot[key].y = value
+            if batch_dict:
+                for key, value in batch_dict.items():
+                    snapshot[key].batch = value
+            if additional_features:
+                for feature_name, feature_dict in additional_features.items():
+                    if feature_dict:
+                        for key, value in feature_dict.items():
+                            snapshot[key][feature_name] = value
         return snapshot
     
     def __next__(self):

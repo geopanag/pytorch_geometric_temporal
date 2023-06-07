@@ -1,14 +1,14 @@
 import torch
 import numpy as np
-from typing import List, Union
+from typing import Sequence, Union
 from torch_geometric.data import Data
 
 
-Edge_Indices = List[Union[np.ndarray, None]]
-Edge_Weights = List[Union[np.ndarray, None]]
+Edge_Indices = Sequence[Union[np.ndarray, None]]
+Edge_Weights = Sequence[Union[np.ndarray, None]]
 Node_Feature = Union[np.ndarray, None]
-Targets = List[Union[np.ndarray, None]]
-Additional_Features = List[np.ndarray]
+Targets = Sequence[Union[np.ndarray, None]]
+Additional_Features = Sequence[np.ndarray]
 
 
 class DynamicGraphStaticSignal(object):
@@ -20,11 +20,11 @@ class DynamicGraphStaticSignal(object):
     edge weights, target matrices and optionally passed attributes might change.
 
     Args:
-        edge_indices (List of Numpy arrays): List of edge index tensors.
-        edge_weights (List of Numpy arrays): List of edge weight tensors.
+        edge_indices (Sequence of Numpy arrays): Sequence of edge index tensors.
+        edge_weights (Sequence of Numpy arrays): Sequence of edge weight tensors.
         feature (Numpy array): Node feature tensor.
-        targets (List of Numpy arrays): List of node label (target) tensors.
-        **kwargs (optional List of Numpy arrays): List of additional attributes.
+        targets (Sequence of Numpy arrays): Sequence of node label (target) tensors.
+        **kwargs (optional Sequence of Numpy arrays): Sequence of additional attributes.
     """
 
     def __init__(
@@ -105,15 +105,24 @@ class DynamicGraphStaticSignal(object):
     def __len__(self):
         return len(self.targets)
 
-    def __getitem__(self, time_index: int):
-        x = self._get_feature()
-        edge_index = self._get_edge_index(time_index)
-        edge_weight = self._get_edge_weight(time_index)
-        y = self._get_target(time_index)
-        additional_features = self._get_additional_features(time_index)
+    def __getitem__(self, time_index: Union[int, slice]):
+        if isinstance(time_index, slice):
+            snapshot = DynamicGraphStaticSignal(
+                self.edge_indices[time_index],
+                self.edge_weights[time_index],
+                self.feature,
+                self.targets[time_index],
+                **{key: getattr(self, key)[time_index] for key in self.additional_feature_keys}
+            )
+        else:
+            x = self._get_feature()
+            edge_index = self._get_edge_index(time_index)
+            edge_weight = self._get_edge_weight(time_index)
+            y = self._get_target(time_index)
+            additional_features = self._get_additional_features(time_index)
 
-        snapshot = Data(x=x, edge_index=edge_index, edge_attr=edge_weight,
-                        y=y, **additional_features)
+            snapshot = Data(x=x, edge_index=edge_index, edge_attr=edge_weight,
+                            y=y, **additional_features)
         return snapshot
 
     def __next__(self):

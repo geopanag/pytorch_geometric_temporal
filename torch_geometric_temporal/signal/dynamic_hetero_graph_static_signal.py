@@ -1,14 +1,14 @@
 import torch
 import numpy as np
-from typing import List, Dict, Union, Tuple
+from typing import Sequence, Dict, Union, Tuple
 from torch_geometric.data import HeteroData
 
 
-Edge_Indices = List[Union[Dict[Tuple[str, str, str], np.ndarray], None]]
-Edge_Weights = List[Union[Dict[Tuple[str, str, str], np.ndarray], None]]
+Edge_Indices = Sequence[Union[Dict[Tuple[str, str, str], np.ndarray], None]]
+Edge_Weights = Sequence[Union[Dict[Tuple[str, str, str], np.ndarray], None]]
 Node_Feature = Union[Dict[str, np.ndarray], None]
-Targets = List[Union[Dict[str, np.ndarray], None]]
-Additional_Features = List[Union[Dict[str, np.ndarray], None]]
+Targets = Sequence[Union[Dict[str, np.ndarray], None]]
+Additional_Features = Sequence[Union[Dict[str, np.ndarray], None]]
 
 
 class DynamicHeteroGraphStaticSignal(object):
@@ -20,16 +20,16 @@ class DynamicHeteroGraphStaticSignal(object):
     edge weights, target matrices and optionally passed attributes might change.
 
     Args:
-        edge_index_dicts (List of dictionaries where keys=Tuples and values=Numpy arrays):
-        List of relation type tuples and their edge index tensors.
-        edge_weight_dicts (List of dictionaries where keys=Tuples and values=Numpy arrays):
-        List of relation type tuples and their edge weight tensors.
+        edge_index_dicts (Sequence of dictionaries where keys=Tuples and values=Numpy arrays):
+         Sequence of relation type tuples and their edge index tensors.
+        edge_weight_dicts (Sequence of dictionaries where keys=Tuples and values=Numpy arrays):
+         Sequence of relation type tuples and their edge weight tensors.
         feature_dict (Dictionary of keys=Strings and values=Numpy arrays): Node type tuples
-        and their node feature tensor.
-        target_dicts (List of dictionaries where keys=Strings and values=Numpy arrays):
-        List of node types and their label (target) tensors.
-        **kwargs (optional List of dictionaries where keys=Strings and values=Numpy arrays): List
-        of node types and their additional attributes.
+         and their node feature tensor.
+        target_dicts (Sequence of dictionaries where keys=Strings and values=Numpy arrays):
+         Sequence of node types and their label (target) tensors.
+        **kwargs (optional Sequence of dictionaries where keys=Strings and values=Numpy arrays): Sequence
+         of node types and their additional attributes.
     """
 
     def __init__(
@@ -113,31 +113,40 @@ class DynamicHeteroGraphStaticSignal(object):
     def __len__(self):
         return len(self.target_dicts)
 
-    def __getitem__(self, time_index: int):
-        x_dict = self._get_feature()
-        edge_index_dict = self._get_edge_index(time_index)
-        edge_weight_dict = self._get_edge_weight(time_index)
-        y_dict = self._get_target(time_index)
-        additional_features = self._get_additional_features(time_index)
+    def __getitem__(self, time_index: Union[int, slice]):
+        if isinstance(time_index, slice):
+            snapshot = DynamicHeteroGraphStaticSignal(
+                self.edge_index_dicts[time_index],
+                self.edge_weight_dicts[time_index],
+                self.feature_dict,
+                self.target_dicts[time_index],
+                **{key: getattr(self, key)[time_index] for key in self.additional_feature_keys}
+            )
+        else:
+            x_dict = self._get_feature()
+            edge_index_dict = self._get_edge_index(time_index)
+            edge_weight_dict = self._get_edge_weight(time_index)
+            y_dict = self._get_target(time_index)
+            additional_features = self._get_additional_features(time_index)
 
-        snapshot = HeteroData()
-        if x_dict:
-            for key, value in x_dict.items():
-                snapshot[key].x = value
-        if edge_index_dict:
-            for key, value in edge_index_dict.items():
-                snapshot[key].edge_index = value
-        if edge_weight_dict:
-            for key, value in edge_weight_dict.items():
-                snapshot[key].edge_attr = value
-        if y_dict:
-            for key, value in y_dict.items():
-                snapshot[key].y = value
-        if additional_features:
-            for feature_name, feature_dict in additional_features.items():
-                if feature_dict:
-                    for key, value in feature_dict.items():
-                        snapshot[key][feature_name] = value
+            snapshot = HeteroData()
+            if x_dict:
+                for key, value in x_dict.items():
+                    snapshot[key].x = value
+            if edge_index_dict:
+                for key, value in edge_index_dict.items():
+                    snapshot[key].edge_index = value
+            if edge_weight_dict:
+                for key, value in edge_weight_dict.items():
+                    snapshot[key].edge_attr = value
+            if y_dict:
+                for key, value in y_dict.items():
+                    snapshot[key].y = value
+            if additional_features:
+                for feature_name, feature_dict in additional_features.items():
+                    if feature_dict:
+                        for key, value in feature_dict.items():
+                            snapshot[key][feature_name] = value
         return snapshot
 
     def __next__(self):

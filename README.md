@@ -22,7 +22,7 @@
 [![Code Coverage][coverage-image]][coverage-url]
 [![Build Status][build-image]][build-url]
 [![Arxiv](https://img.shields.io/badge/ArXiv-2104.07788-orange.svg)](https://arxiv.org/abs/2104.07788)
-[![benedekrozemberczki](https://img.shields.io/twitter/follow/benrozemberczki?style=social&logo=twitter)](https://twitter.com/intent/follow?screen_name=benrozemberczki)⠀
+[![benedekrozemberczki](https://img.shields.io/twitter/follow/benrozemberczki?style=social&logo=twitter)](https://twitter.com/intent/follow?screen_name=benrozemberczki)
 
 **[Documentation](https://pytorch-geometric-temporal.readthedocs.io)** | **[External Resources](https://pytorch-geometric-temporal.readthedocs.io/en/latest/notes/resources.html)** | **[Datasets](https://pytorch-geometric-temporal.readthedocs.io/en/latest/notes/introduction.html#discrete-time-datasets)**
 
@@ -163,33 +163,22 @@ If you notice anything unexpected, please open an [issue](https://benedekrozembe
 
 **Installation**
 
-Binaries are provided for Python version <= 3.9.
-
-**PyTorch 1.10.0**
-
-To install the binaries for PyTorch 1.10.0, simply run
+First install [pytorch][pytorch-install] and [pytorch-geometric][pyg-install]
+and then run
 
 ```sh
-pip install torch-scatter -f https://data.pyg.org/whl/torch-1.10.0+${CUDA}.html
-pip install torch-sparse -f https://data.pyg.org/whl/torch-1.10.0+${CUDA}.html
-pip install torch-geometric
 pip install torch-geometric-temporal
 ```
 
-where `${CUDA}` should be replaced by either `cpu`, `cu102`, or `cu113` depending on your PyTorch installation.
-
-|             | `cpu` | `cu102` | `cu113` |
-|-------------|-------|---------|---------|
-| **Linux**   | ✅    | ✅      | ✅      |
-| **Windows** | ✅    | ✅      | ✅      |
-| **macOS**   | ✅    |         |         |
+[pytorch-install]: https://pytorch.org/get-started/locally/
+[pyg-install]: https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html
 
 --------------------------------------------------------------------------------
 
 **Running tests**
 
 ```
-$ python setup.py test
+$ python -m pytest test
 ```
 --------------------------------------------------------------------------------
 
